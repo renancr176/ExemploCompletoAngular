@@ -1,0 +1,2264 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="profile-bg-img">
+      <!-- <img class="profile-bg-img img-fluid" src="assets/images/user-profile/proposta1.jpg" alt="bg-img"> -->
+      <img class="profile-bg-img img-fluid" src="assets/images/user-profile/proposta.jpeg" alt="bg-img">
+    </div>
+  </div>
+</div>
+
+<br/>
+
+<div class="card">
+  <div class="card-header">
+    <h5>Formulário para proposta de extensão</h5>
+    <label style="color:#8B8989">O prazo para a protocolização da proposta deverá ser de, no mínimo, 60 dias de antecedência do início da prática.</label>
+  </div>
+
+  <div class="card-body">
+    <div class="form-group row">
+      <div class="col-sm-3">
+        <label class="col-form-label">Data da entrega da proposta</label>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" specialCharacters="false" class="form-control date" placeholder="14/05/2018" mask='00/00/0000' readonly >
+      </div>
+      <div class="col-sm-1">
+        <label class="col-form-label">Proposta:</label>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" specialCharacters="false" class="form-control" placeholder="200/01" mask='0000000000/000'readonly>
+      </div>
+      <div class="col-sm-1">
+        <label class="col-form-label">Status:</label>
+      </div>
+      <div class="col-sm-3">
+        <b><label class="col-form-label" style="color:#EE3B3B">Em análise CPGEX</label></b>
+      </div>
+    </div>
+
+    <hr/>
+
+    <form>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="md-tabs">
+            <ngb-tabset>
+              <ngb-tab>
+                <ng-template ngbTabTitle><i class="icofont icofont-home"></i> Básico</ng-template>
+                <ng-template ngbTabContent>
+                  <div [@fadeInOutTranslate] class="m-t-10">
+                    <br/>
+                    <div class="form-group">
+                      <h6>1. Modalidade(s) da Atividade de Extensão</h6>
+                      <div class="row" *ngFor= "let obj of tipoModalidade">
+                        <div class="col-sm-4">
+                          <div class="border-checkbox-section">
+                            <div class="border-checkbox-group border-checkbox-group-info">
+                              <input class="border-checkbox" type="checkbox" id="{{obj.id}}" value="{{obj.id}}" (click)="clickModalidade($event)" [checked]="checkModalidade(obj.id)">
+                              <label class="border-checkbox-label" for="{{obj.id}}">{{obj.descricao}}</label>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-4"  id="haveraApresentacao" *ngIf="subitemAtvExtensao(obj.id, '1EA63888-4BA2-4578-8678-37637B509DA4')">
+                          <label>Haverá apresentação de trabalho?</label>
+                          <br/>
+                         <div class=" form-radio radio radio-info radio-inline">
+                          <label>
+                            <input  type="radio" name="PossuiApresentacaoTrabalho" value="Sim" (change)="PossuiTrab(true)">
+                              <i class="helper"></i>Sim
+                          </label>
+                        </div>
+                        <div class="form-radio radio radio-info radio-inline">
+                          <label>
+                            <input type="radio" name="PossuiApresentacaoTrabalho" value="Não"  (change)="PossuiTrab(false)">
+                            <i class="helper"></i>Não
+                          </label>
+                        </div>
+                      </div>   
+                                         
+                        <div class="col-sm-4" *ngIf="subitemAtvExtensaoPatEventoCurso(obj.id, '1EA63888-4BA2-4578-8678-37637B509DA4', 'ciente')">
+                          <div class="border-checkbox-section">
+                            <div class="border-checkbox-group border-checkbox-group-danger">
+                              <input class="border-checkbox" type="checkbox" id="socializacao">
+                              <label class="border-checkbox-label" for="socializacao">
+                                  Estou ciente e concordo em socializar o conhecimento adquiridos no evento / curso com a Instituição Barão de Mauá.
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group col-sm-12 row" *ngIf="subitemAtvExtensaoPatEventoCurso(obj.id, '1EA63888-4BA2-4578-8678-37637B509DA4', 'motivoParticipacao')">
+                          
+                          <div class="col-sm-12">
+                            <textarea rows="3" class="form-control" placeholder="Justificar a Participação em evento / curso"></textarea>
+                          </div>
+                          
+                        </div>
+
+
+                        <!-- <div class="form-group col-sm-12 row" *ngIf="JustificativaParcRventCur">
+                          <div class="col-sm-12">
+                            <textarea rows="3" class="form-control" placeholder="Justificar a Participação em evento / curso"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group col-sm-12 row" *ngIf="AnexoComprobatorio" >
+                          <div class="col-sm-12 row" id="AnexoComprobatorio" >
+                            <label class="col-sm-4 col-form-label"> Anexar documento comprobatório</label>
+                            <div class="col-sm-8">
+                              <input type="file" class="form-control">
+                            </div>
+                          </div>
+                        </div> -->
+
+
+
+
+
+
+                        <div class="col-sm-4"  id="AcaoResponsabilidade" *ngIf= "subitemAtvExtensao(obj.id, 'E005FC39-427C-4CE7-AF49-036E1E9E3D86')">
+                          <select  id="listaSubTipoModalidade" name="listaSubTipoModalidade" class="form-control form-control-inverse" (change)="SelectedSubTipoModalidade(obj.id, $event)">
+                             <option value=""></option>
+                             <option *ngFor= "let obj2 of subTipoModel" value="{{obj2.id}}" >{{obj2.descricao}}</option>
+                          </select>                            
+                        </div>
+                        
+                       
+                      </div>
+                      
+
+                      <!-- document.querySelector('#modalComunicado') -->
+
+
+
+                   
+
+               <!--
+                      <div class="form-group col-sm-12 row" *ngIf="JustificativaParcRventCur">
+                        <div class="col-sm-12">
+                          <textarea rows="3" class="form-control" placeholder="Justificar a Participação em evento / curso"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-12 row" *ngIf="AnexoComprobatorio" >
+                        <div class="col-sm-12 row" id="AnexoComprobatorio" >
+                          <label class="col-sm-4 col-form-label"> Anexar documento comprobatório</label>
+                          <div class="col-sm-8">
+                            <input type="file" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row col-sm-12">
+                        <div class="col-sm-4">
+                          <div class="border-checkbox-section">
+                            <div class="border-checkbox-group border-checkbox-group-info">
+                              <input class="border-checkbox" type="checkbox" id="checkboxRespSocial" (change)="FieldsChangeRespSocial($event)">
+                              <label class="border-checkbox-label" for="checkboxRespSocial">Ação de responsabilidade social</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6" id="TipoRespSocial" *ngIf="TipoRespSocial">
+                          <select id="tipoResponsabilidadeSocial" name="opcaoacaoSocial" class="form-control form-control-inverse" [(ngModel)]="empSelected" (ngModelChange)="employeeSelected($event)">
+                            <option value="01" selected>Escolha uma opção</option>
+                            <option value="02" >Inclusão social</option>
+                            <option value="03">Desenvolvimento econômico e social</option>
+                            <option value="04">Defesa do meio ambiente</option>
+                            <option value="05">Memória cultural</option>
+                            <option value="06">Patrimônio cultural</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-12" *ngIf="TextoInclusaoSocial">
+                        <label style="color: rgb(28, 113, 241)">
+                          Ação que combatem a exclusão aos benefícios da vida em sociedade, provocada pelas diferenças de classe
+                          social, educação, idade, deficiência, gênero, preconceito social ou preconceitos raciais.
+                          Inclusão social é oferecer oportunidades iguais de acesso a bens e serviços a todos.
+                        </label>
+                      </div>
+                      <div class="col-sm-12" *ngIf="TextoDesenvolvEcoSocial">
+                        <label style="color: rgb(28, 113, 241)">
+                          Desenvolvimento é capaz de gerar riquezas e melhoria na qualidade de vida da população de uma região,
+                          enquanto contribui para o equilíbrio social, o respeito ao meio ambiente e à cultura regional. A participação
+                          social nas organizações da comunidade e da sociedade pode ampliar o acesso das classes mas populares aos atos de
+                          gestão e solução dos problemas  econômico-sociais, contribuir para o desenvolvimento da socidade cívil e assegurar
+                          o fortalecimento dos mecanismos democráticos para a construção de um modelo de sociedade mais inclusiva.
+                        </label>
+                      </div>
+                      <div class="col-sm-12" *ngIf="TextoDedfesaAmbiente">
+                        <label style="color: rgb(28, 113, 241)">
+                          Educação ambiental, defesa de ecossistemas, desenvolvimento ou prestação do ambiente.
+                        </label>
+                      </div>
+                      <div class="col-sm-12" *ngIf="TextoMemCultural">
+                        <label style="color: rgb(28, 113, 241)">
+                          Preservação ou resgate da memória cultural.
+                        </label>
+                      </div>
+                      <div class="col-sm-12" *ngIf="TextoPatrCultural">
+                        <label style="color: rgb(28, 113, 241)">
+                          Preservação, valorização, conservação, contemplação do patrimônio cultural.
+                        </label>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxOutros" (change)="FieldsChangeOutros($event)">
+                            <label class="border-checkbox-label" for="checkboxOutros">Outros</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-sm-12 row" *ngIf="JustificativaOutros">
+                        <div class="col-sm-12">
+                          <textarea rows="3" class="form-control" placeholder="Justificar"></textarea>
+                        </div>
+                      </div>   -->
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>2. Título</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" id=titulo>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>5. Curso(s)</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-3">
+                        <select id="filtroCurso" name="filtroCurso" class="form-control form-control-inverse" >
+                          <option value="01" ></option>
+                          <option value="02" >Graduação</option>
+                          <option value="03">Pós-Graduação</option>
+                          <option value="04">Institucional</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-9">
+                        <select id="PublicoAlvo" name="PublicoAlvo" class="form-control form-control-inverse" [(ngModel)]="empSelectedCurso" (ngModelChange)="employeeSelectedCurso($event)">
+                          <option value="01" ></option>
+                          <option value="02" >CBM</option>
+                          <option value="03" >ADMINISTRAÇÃO (SEM-M)</option>
+                          <option value="04">TEC. ANÁLISE/DESENV. SISTEMAS</option>
+                          <option value="05">CIÊNCIA DA COMPUTAÇÃO</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12" *ngIf="CoordenadorCurso02">
+                        Coordenador(s):
+                        <label style="color: rgb(28, 113, 241)">
+                          Reitoria
+                        </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12" *ngIf="CoordenadorCurso03">
+                        Coordenador(s):
+                        <label style="color: rgb(28, 113, 241)">
+                          EDUARDO GARBES CICCONI
+                        </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12" *ngIf="CoordenadorCurso04">
+                        Coordenador(s):
+                        <label style="color: rgb(28, 113, 241)">
+                          GUILHERME VAZ TORRES
+                        </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12" *ngIf="CoordenadorCurso05">
+                        Coordenador(s):
+                        <label style="color: rgb(28, 113, 241)">
+                          DEBORA PELICANO DINIZ
+                        </label>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12"><h6>8. Total de vagas </h6> </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-2">
+                        <label class="col-form-label">Quantidade:</label>
+                      </div>
+                      <div class="form-group col-sm-2" >
+                        <input type="text" class="form-control autonumber" mask="0000000" id="quantidade" [disabled]="DesabilitaVagas()" >
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxQuantVagas" (change)="checkboxNaoAplVagas($event)" checked >
+                            <label class="border-checkbox-label" for="checkboxQuantVagas">Não se aplica</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>9. Público alvo</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-1">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxPubicoInterno">
+                            <label class="border-checkbox-label" for="checkboxPubicoInterno">Interno</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-1">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxPubicoExterno" (change)="checkboxPubicoExterno($event)">
+                            <label class="border-checkbox-label" for="checkboxPubicoExterno">Externo</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-12" *ngIf="EspecificarPublicoExterno">
+                        <textarea rows="3"  class="form-control" placeholder="Especificar"></textarea>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>12. Inscrições</h6>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-sm-2">
+                        <select id="listaTipoInscricao" name="listaTipoInscricao" class="form-control form-control-inverse "[(ngModel)]="empSelectedTipoinscricao" (ngModelChange)="employeeSelectedTipoinscricao($event)" [disabled]="DesabilitaInscricao()">
+                             <option value=""></option>
+                          <option *ngFor= "let obj of tipoInscricao" value="{{obj.descricao}}" id="{{obj.id}}" >{{obj.descricao}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-2">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxinscricao" (change)="checkboxNaoAplTipoInsc($event)" checked >
+                            <label class="border-checkbox-label" for="checkboxinscricao">Não se aplica</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="EspecificarTipoInscricao">
+                      <div class="col-sm-12">
+                        <textarea rows="3"  class="form-control" placeholder="Especificar"  [disabled]="DesabilitaInscricao()"></textarea>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>13. Nível da atividade de extensão</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-2">
+                        <select id="PublicoAlvo" name="PublicoAlvo" class="form-control form-control-inverse" [(ngModel)]="empSelected" (ngModelChange)="employeeSelectedNivel($event)">
+                          <option value="01" ></option>
+                          <option value="02" >Ação</option>
+                          <option value="03" >Atividade</option>
+                          <option value="04" >Projeto</option>
+                          <option value="05" >Programa</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-10" *ngIf="Textoacao" >
+                        <label style="color: rgb(28, 113, 241)">
+                          É a menor unidade de classificação da extensão. Poderá ser realizada isoladamente ou estar vinculada a atividade,
+                          projeto ou programa de extensão.
+                        </label>
+                      </div>
+                      <div class="form-group col-sm-10" *ngIf="Textoatividade">
+                        <label style="color: rgb(28, 113, 241)">
+                          É o conjunto de ações contínuas desenvolvidas em um período de tempo mínimo de 8 horas.
+                        </label>
+                      </div>
+                      <div class="form-group col-sm-10" *ngIf="Textoprojeto">
+                        <label style="color: rgb(28, 113, 241)">
+                          É o conjunto de atividades desenvolvidas em um período máximo de 359 horas.
+                        </label>
+                      </div>
+                      <div class="form-group col-sm-10" *ngIf="Textoprograma">
+                        <label style="color: rgb(28, 113, 241)">
+                          É o conjunto de atividades ou projetos de caráter multiprofissional, com diretrizes claras e voltado
+                          a um objetivo institucional comum, podendo compreender, ou não subprogramas.
+                          </label>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>14. Área de conhecimento principal da atividade de extensão</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-12">
+                        <select id="PublicoAlvo" name="PublicoAlvo" class="form-control form-control-inverse ">
+                          <option value="01" ></option>
+                          <option value="02" >Ciências Exatas e da Terra</option>
+                          <option value="03" >Ciências Biológicas</option>
+                          <option value="04" >Engenharias</option>
+                          <option value="05" >Ciências da Saúde</option>
+                          <option value="06" >Ciências Agrárias</option>
+                          <option value="07" >Ciências Sociais Aplicadas</option>
+                          <option value="08" >Ciências Humanas </option>
+                          <option value="09" >Linguística, Letras e Artes </option>
+                          <option value="10" >Multidisciplinar</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-2">
+                        <label>Sub-área 1:</label>
+                      </div>
+                      <div class="form-group col-sm-10">
+                        <select id="PublicoAlvo" name="PublicoAlvo" class="form-control form-control-inverse ">
+                          <option value="01" ></option>
+                          <option value="02" >Administração</option>
+                          <option value="03" >Arquitetura, urbanismo e design</option>
+                          <option value="04" >Artes / Música</option>
+                          <option value="05" >Ciência da Computação</option>
+                          <option value="06" >Direito</option>
+                          <option value="07" >Educação Física</option>
+                          <option value="08" >Enfermagem </option>
+                          <option value="09" >Medicina</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-2">
+                        <label>Sub-área 2:</label>
+                      </div>
+                      <div class="form-group col-sm-10">
+                        <select id="PublicoAlvo" name="PublicoAlvo" class="form-control form-control-inverse ">
+                          <option value="01" ></option>
+                          <option value="02" >Administração</option>
+                          <option value="03" >Arquitetura, urbanismo e design</option>
+                          <option value="04" >Artes / Música</option>
+                          <option value="05" >Ciência da Computação</option>
+                          <option value="06" >Direito</option>
+                          <option value="07" >Educação Física</option>
+                          <option value="08" >Enfermagem </option>
+                          <option value="09" >Medicina</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-2">
+                        <label>Sub-área 3:</label>
+                      </div>
+                      <div class="form-group col-sm-10">
+                        <select id="PublicoAlvo" name="PublicoAlvo" class="form-control form-control-inverse ">
+                          <option value="01" ></option>
+                          <option value="02" >Administração</option>
+                          <option value="03" >Arquitetura, urbanismo e design</option>
+                          <option value="04" >Artes / Música</option>
+                          <option value="05" >Ciência da Computação</option>
+                          <option value="06" >Direito</option>
+                          <option value="07" >Educação Física</option>
+                          <option value="08" >Enfermagem </option>
+                          <option value="09" >Medicina</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>15. Justificativa da proposta</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <label>Descrever a relevância / importância da realização da proposta</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <textarea rows="3"  class="form-control" placeholder="Justificar"></textarea>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>16. Objetivos</h6>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <textarea rows="3"  class="form-control" placeholder="Especificar"></textarea>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>17. Descrição das atividades a serem desenvolvidas</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <textarea rows="3"  class="form-control" placeholder="Descrever"></textarea>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>18. Impactos e resultados esperados</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <textarea rows="3"  class="form-control" placeholder="Descrever"></textarea>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>19. Infraestrutura necessária</h6>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfraNaplica">
+                            <label class="border-checkbox-label" for="checkboxInfraNaplica">Não se aplica</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfraAnf">
+                            <label class="border-checkbox-label" for="checkboxInfraAnf">Anfiteatro</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfrasalaAula">
+                            <label class="border-checkbox-label" for="checkboxInfrasalaAula">Sala de aula</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfraLab">
+                            <label class="border-checkbox-label" for="checkboxInfraLab">Laboratório</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfraSalaInf">
+                            <label class="border-checkbox-label" for="checkboxInfraSalaInf">Sala de informática</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfraPatio">
+                            <label class="border-checkbox-label" for="checkboxInfraPatio">Pátio</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfraOutros" (change)="FieldsChangeInfraOutros($event)">
+                            <label class="border-checkbox-label" for="checkboxInfraOutros">Outros</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12" *ngIf="JustificativaInfraOutros">
+                        <textarea rows="3" class="form-control" placeholder="Justificar"></textarea>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-6"></div>
+                      <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block "> >> PRÓXIMO >> </button>
+                      </div>
+                    </div>
+
+                    <br/>
+                 </div>
+                </ng-template>
+              </ngb-tab>
+
+
+              <ngb-tab>
+                <ng-template ngbTabTitle><i class="icofont icofont-ui-user "></i> Envolvidos</ng-template>
+                <ng-template ngbTabContent>
+                  <div [@fadeInOutTranslate] class="m-t-10">
+                    <br/>
+                    <div class="form-group">
+                      <h6>3. Responsáveis por esta proposta de extensão</h6>
+                      <div class="col-sm-12">
+                        <div class="table-responsive">
+                          <table class="table table-striped table-bordered table-responsive full-data-table">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th class="col-sm-4">Nome</th>
+                                <th class="col-sm-4">E-mail</th>
+                                <th class="col-sm-3">Telefone</th>
+                                <th class="col-sm-1"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Karina Mara Martins Viana</td>
+                                <td>karina.viana@baraodemaua.br</td>
+                                <td>(16) 99142-2448</td>
+                                <td><input type="checkbox"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>Renan de Carvalho Ribeiro</td>
+                                <td>renancr@baraodemaua.br</td>
+                                <td>(016) 3968-3913</td>
+                                <td><input type="checkbox"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-11"> </div>
+                          <div class="form-group "><button class="btn btn-success btn-icon" (click)="modalDefault.show()">+</button></div>
+                          <div class="form-group "><button class="btn btn-danger btn-icon">-</button></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <app-modal-basic #modalDefault>
+                      <div class="app-modal-header">
+                        <div class="form-radio">
+                          <form>
+                            <div class="radio radio-inline">
+                              <label>
+                                <input type="radio" name="PessoalInterno" value="Sim" (change)="PessoalInterno('Inter')"checked >
+                                <i class="helper"></i>Interno
+                              </label>
+                            </div>
+                            <div class="radio radio-inline">
+                              <label>
+                                <input type="radio" name="PessoalInterno" value="Nao" (change)="PessoalInterno('Exter')">
+                                <i class="helper"></i>Externo
+                              </label>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="app-modal-body"  *ngIf="AddInterno">
+                        <h5>Selecione o colaborador</h5>
+                        <div class="row">
+                          <div class="form-group col-sm-12">
+                            <select id="Colaboradores" name="Colaboradores" class="form-control form-control-inverse ">
+                              <option value="01" ></option>
+                              <option value="06" >Este processo de localisar o colaborador será igual ao sistema de "Protocolos" </option>
+                              <option value="02" >Adair Ferreira de Lima</option>
+                              <option value="03" >Adelino Fontana Junio</option>
+                              <option value="04" >Adelita Pereira da Silva Granados</option>
+                              <option value="05" >Adriana Coelho de Souza</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="app-modal-body"  *ngIf="AddExterno">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Nome</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">E-mail</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Telefone</label>
+                          <div class="col-sm-5">
+                            <input type="text" class="form-control"  placeholder="(__) _____-____" mask="(00) 00000-0000">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="app-modal-footer">
+                          <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalDefault.hide()">ADICIONAR</button>
+                          <button type="button" class="btn btn-danger waves-effect" (click)="modalDefault.hide()">CANCELAR</button>
+                      </div>
+                    </app-modal-basic>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>4. Equipe executora</h6>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-responsive full-data-table">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th class="col-sm-4">Nome</th>
+                              <th class="col-sm-4">E-mail</th>
+                              <th class="col-sm-3">Telefone</th>
+                              <th class="col-sm-1"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Ricardo Luis Morelli</td>
+                              <td>rlmorelli@baraodemaua.br</td>
+                              <td>(16) 3968-3913</td>
+                              <td><input type="checkbox"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Lucas Baggio Figueira</td>
+                              <td>lucas.figueira@baraodemaua.br</td>
+                              <td>(016) 3603-6663</td>
+                              <td><input type="checkbox"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-11"> </div>
+                        <div class="form-group "><button class="btn btn-success btn-icon" (click)="modalDefault.show()">+</button></div>
+                        <div class="form-group "><button class="btn btn-danger btn-icon">-</button></div>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block"> << ANTERIOR << </button>
+                      </div>
+                      <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block "> >> PRÓXIMO >> </button>
+                      </div>
+                    </div>
+                    <br/>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+
+              <ngb-tab>
+                <ng-template ngbTabTitle><i class="icofont icofont-ui-message"></i> Período / Cronograma </ng-template>
+                <ng-template ngbTabContent>
+                  <div [@fadeInOutTranslate] class="m-t-10">
+                    <br/>
+                    <div class="form-group"><h6>6. Período de realização</h6></div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class=" form-radio radio radio-info radio-inline">
+                          <label>
+                            <input  type="radio" name="DuracaoEvento" value="unico" (change)="Eventounico('unico')">
+                            <i class="helper"></i>Único
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="eventoUnico">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Data: </label>
+                          <input class="col-sm-5" name="dateinicioevento" type="date" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário início: </label>
+                          <input class="col-sm-2" name="horariosaida" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário término: </label>
+                          <input class="col-sm-2" name="horariochegada" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                      </div>
+                      <br/>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class=" form-radio radio radio-info radio-inline">
+                          <label>
+                            <input  type="radio" name="DuracaoEvento" value="diario" (change)="Eventodiario('diario')">
+                            <i class="helper"></i>Diário
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="eventoDiario">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Data início: </label>
+                          <input class="col-sm-5" name="dateinicioevento" type="date" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Data término: </label>
+                          <input class="col-sm-5" name="dateinicioevento" type="date" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário início: </label>
+                          <input class="col-sm-2" name="horariosaida" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário término: </label>
+                          <input class="col-sm-2" name="horariochegada" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                      </div>
+                      <br/>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class=" form-radio radio radio-info radio-inline">
+                          <label>
+                            <input  type="radio" name="DuracaoEvento" value="semanal" (change)="Eventosemanal('semanal')">
+                            <i class="helper"></i>Evento semanal
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="eventosemanal">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Data início: </label>
+                          <input class="col-sm-5" name="dateinicioevento" type="date" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Data término: </label>
+                          <input class="col-sm-5" name="dateinicioevento" type="date" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário início: </label>
+                          <input class="col-sm-2" name="horariosaida" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário término: </label>
+                          <input class="col-sm-2" name="horariochegada" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <div class="checkbox col-sm-12">
+                            <input class="checkbox" type="checkbox" id="Domingo"> Domingo
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox col-sm-12">
+                            <input class="checkbox" type="checkbox" id="Segunda-feira"> Segunda-feira
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox col-sm-12">
+                            <input class="checkbox" type="checkbox" id="Segunda-feira"> Terça-feira
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <div class="checkbox col-sm-12">
+                            <input class="checkbox" type="checkbox" id="Segunda-feira"> Quarta-feira
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="checkbox col-sm-12">
+                            <input class="checkbox" type="checkbox" id="Segunda-feira"> Quinta-feira
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="checkbox col-sm-12">
+                            <input class="checkbox" type="checkbox" id="Segunda-feira"> Sexta-feira
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <div class="checkbox col-sm-12">
+                            <input class="checkbox" type="checkbox" id="Segunda-feira"> Sábado
+                          </div>
+                        </div>
+                      </div>
+                      <br/>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class=" form-radio radio radio-info radio-inline">
+                          <label>
+                            <input  type="radio" name="DuracaoEvento" value="mensal" (change)="Eventomensal('mensal')">
+                              <i class="helper"></i>Evento mensal
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="eventomensal">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Data início: </label>
+                          <input class="col-sm-5" name="dateinicioevento" type="date" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Data término: </label>
+                          <input class="col-sm-5" name="dateinicioevento" type="date" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário início: </label>
+                          <input class="col-sm-2" name="horariosaida" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-4">Horário término: </label>
+                          <input class="col-sm-2" name="horariochegada" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2">
+                          <div class="radio col-sm-12">
+                            <input class="radio" type="radio" id="Domingo" name="parametromensal" value="dia" (change)="EventomensalDia('dia')"> Dia
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="radio col-sm-12">
+                            <input class="radio" type="radio" id="Domingo" name="parametromensal" value="semana" (change)="EventomensalSemana('semana')"> Semana
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" *ngIf="eventomensalsemana">
+                        <div class="col-sm-12">
+                          <div class="col-sm-3">
+                            <div class="checkbox col-sm-12">
+                              <input class="checkbox" type="checkbox" id="Domingo"> Domingo
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="checkbox col-sm-12">
+                              <input class="checkbox" type="checkbox" id="Segunda-feira"> Segunda-feira
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="checkbox col-sm-12">
+                              <input class="checkbox" type="checkbox" id="Segunda-feira"> Terça-feira
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="checkbox col-sm-12">
+                              <input class="checkbox" type="checkbox" id="Segunda-feira"> Quarta-feira
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="checkbox col-sm-12">
+                              <input class="checkbox" type="checkbox" id="Segunda-feira"> Quinta-feira
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="checkbox col-sm-12">
+                              <input class="checkbox" type="checkbox" id="Segunda-feira"> Sexta-feira
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="checkbox col-sm-12">
+                              <input class="checkbox" type="checkbox" id="Segunda-feira"> Sábado
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6" *ngIf="eventomensaldia">
+                        <label class="col-sm-4">Todos os dias:</label>
+                        <input class="col-sm-2" name="dia" type="text" />
+                      </div>
+                      <br/>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class=" form-radio radio radio-info radio-inline">
+                          <label>
+                            <input  type="radio" name="DuracaoEvento" value="cronograma" (change)="Eventocronograma('cronograma')">
+                              <i class="helper"></i>Cronograma
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="eventocronograma">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-responsive full-data-table">
+                              <thead>
+                                <tr>
+                                  <th class="col-sm-1">Data</th>
+                                  <th class="col-sm-1">Dia</th>
+                                  <th class="col-sm-1">Início</th>
+                                  <th class="col-sm-1">Término</th>
+                                  <th class="col-sm-3">Conteúdo</th>
+                                  <th class="col-sm-3">Responsável</th>
+                                  <th class="col-sm-1">Local</th>
+                                  <th class="col-sm-1"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td >04/06/2018</td>
+                                  <td>Segunda-feira</td>
+                                  <td>19:00</td>
+                                  <td>20:00</td>
+                                  <td>Introdução ao Angular 4</td>
+                                  <td>João Pedro Silva</td>
+                                  <td>Anfiteatro - unidade central Barão de Mauá</td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td >05/06/2018</td>
+                                  <td>Terça-feira</td>
+                                  <td>19:00</td>
+                                  <td>20:00</td>
+                                  <td>Teste 2</td>
+                                  <td>Maria M. Viana</td>
+                                  <td>Anfiteatro - unidade central Barão de Mauá</td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td >06/06/2018</td>
+                                  <td>Qurta-feira</td>
+                                  <td>19:00</td>
+                                  <td>20:00</td>
+                                  <td>Teste 3</td>
+                                  <td>Renan de Carvalho Ribeiro</td>
+                                  <td>Anfiteatro - unidade central Barão de Mauá</td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-11"></div>
+                            <div class="form-group "><button class="btn btn-success btn-icon" (click)="modalHorario.show()">+</button></div>
+                            <div class="form-group "><button class="btn btn-danger btn-icon">-</button></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <app-modal-basic #modalHorario>
+                      <div class="app-modal-header">
+                        <h5 class="modal-title">Novo horário - Cronograma</h5>
+                        <button type="button" class="close basic-close" (click)="modalHorario.hide()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="app-modal-body">
+                        <form>
+                          <div class="form-group row">
+                            <div class="col-sm-3">
+                              <label class="col-form-label ">Data:</label>
+                            </div>
+                            <div class="col-sm-5">
+                              <input class="form-control" name="dateinicioevento" type="date" />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-sm-3">
+                              <label class="col-form-label ">Hora início:</label>
+                            </div>
+                            <div class="col-sm-3">
+                              <input type="text" class="form-control hour" placeholder="__:__" mask="00:00">
+                            </div>
+                            <div class="col-sm-3">
+                              <label class="col-form-label ">Hora término:</label>
+                            </div>
+                            <div class="col-sm-3">
+                              <input type="text" class="form-control hour" placeholder="__:__" mask="00:00">
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <div class="col-sm-3">
+                              <label class="col-form-label ">Conteúdo:</label>
+                            </div>
+                            <div class="col-sm-9">
+                              <textarea rows="2"  class="form-control"></textarea>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-sm-3">
+                              <label class="col-form-label ">Responsável:</label>
+                            </div>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control"/>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-sm-3">
+                              <label class="col-form-label ">Local:</label>
+                            </div>
+                            <div class="col-sm-9">
+                              <textarea rows="2"  class="form-control"></textarea>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="app-modal-footer">
+                        <div class="app-modal-footer">
+                          <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                          <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                        </div>
+                      </div>
+                    </app-modal-basic>
+                    <br/>
+
+                    <h6>7. Total carga horária:  <label style="color:red"><u>3:00</u></label></h6>
+                    <hr/>
+
+                    <div class="col-sm-12 row">
+                      <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block"> << ANTERIOR << </button>
+                      </div>
+                      <div class="col-sm-6">
+                        <button class="btn btn-primary btn-block "> >> PRÓXIMO >> </button>
+                      </div>
+                    </div>
+                    <br/>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+
+              <ngb-tab>
+                <ng-template ngbTabTitle><i class="icofont icofont-ui-settings"></i> Trajeto / Custos</ng-template>
+                <ng-template ngbTabContent>
+                  <div [@fadeInOutTranslate] class="m-t-10">
+                    <br/>
+                    <div class="form-group"><h6>10. Local de realização</h6>
+                      <div class="row">
+                        <div class="form-group col-sm-12">
+                          <textarea rows="3"  class="form-control" placeholder="Logradouro, N°, CEP, Bairro, Cidade, Estado"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-sm-4">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-info">
+                            <input class="border-checkbox" type="checkbox" id="checkboxInfraFretamento" (change)="FieldsChangeInfraFretamento($event)">
+                            <label class="border-checkbox-label" for="checkboxInfraFretamento">Fretamento de ônibus/van</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group" *ngIf="InformacoesTransporte">
+                      <div class="row">
+                        <label class="col-sm-2">* N° de passageiro: </label>
+                        <input type="text" class="form-control col-sm-1" id=titulo  mask='000000'>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-5">* O itinerário possui trecho de estrada de terra? </label>
+                        <div class="col-sm-4">
+                          <div class=" form-radio radio radio-info radio-inline">
+                            <label>
+                              <input  type="radio" name="PossuiTerra" value="Sim" (change)="PossuiTerra('Sim')"><i class="helper"></i>Sim
+                            </label>
+                          </div>
+                          <div class="form-radio radio radio-info radio-inline">
+                            <label>
+                              <input type="radio" name="PossuiTerra" value="Não"  (change)="PossuiTerra('Não')">
+                              <i class="helper"></i>Não
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-5">* Tem estacionamento para o ônibus? </label>
+                        <div class="col-sm-4">
+                          <div class=" form-radio radio radio-info radio-inline">
+                            <label>
+                              <input  type="radio" name="PossuiEstacionamento" value="Sim" (change)="PossuiEstacionamento('Sim')"><i class="helper"></i>Sim
+                            </label>
+                          </div>
+                          <div class="form-radio radio radio-info radio-inline">
+                            <label>
+                              <input type="radio" name="PossuiEstacionamento" value="Não"  (change)="PossuiEstacionamento('Não')"><i class="helper"></i>Não
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <label class="col-sm-5">* Estadia do motorista? </label>
+                        <div class="col-sm-4">
+                          <div class=" form-radio radio radio-info radio-inline">
+                            <label>
+                              <input  type="radio" name="PossuiEstadia" value="Sim" (change)="Possuiestadia('Sim')"><i class="helper"></i>Sim
+                            </label>
+                          </div>
+                          <div class="form-radio radio radio-info radio-inline">
+                            <label>
+                              <input type="radio" name="PossuiEstadia" value="Não"  (change)="Possuiestadia('Não')"><i class="helper"></i>Não
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <br/>
+                      <div class="row ">
+                        <div class="col-sm-6 ">
+                          <label><b>Saída de Ribeirão Preto:</b></label>
+                        </div>
+                        <div class="col-sm-6 ">
+                          <label><b>Chegada em Ribeirão Preto:</b></label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-3">Data: </label>
+                          <input class="col-sm-6" name="dateinicioevento" type="date" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-3">Data: </label>
+                          <input class="col-sm-6" name="dateterminoevento" type="date" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-3">Horário: </label>
+                          <input class="col-sm-2" name="horariosaida" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-3">Horário: </label>
+                          <input class="col-sm-2" name="horariochegada" type="text" placeholder="__:__" mask="00:00"/>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <label class="col-sm-2">Local: </label>
+                          <select id="ColaboradoresSaida" name="ColaboradoresSaida" class="form-control form-control-inverse col-sm-12">
+                            <option value="01" ></option>
+                            <option value="06" >Primo Saiani </option>
+                            <option value="02" >Unidade Central</option>
+                            <option value="03" >Unidade Itararé</option>
+                            <option value="04" >Unidade Camilo de Matos</option>
+                            <option value="05" >Unidade Carlos Chagas -  Itatiaia</option>
+                            <option value="05" >Unidade Independência.</option>
+                            <option value="05" >Hospital Veterinário</option>
+                            <option value="05" >Clínica de Psicologia </option>
+                            <option value="05" >Clínica de Fisioterapia</option>
+                            <option value="05" >Unidade Santa Casa</option>
+                            <option value="05" >Biblioteca Central</option>
+                            <option value="05" >Clínica de Psicopedagogia</option>
+                            <option value="05" >Unidade Santa Casa</option>
+                            <option value="05" >Unidade Golfe</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="col-sm-3">Local: </label>
+                          <select id="ColaboradoresChegada" name="ColaboradoresChegada" class="form-control form-control-inverse col-sm-12">
+                            <option value="01" ></option>
+                            <option value="06" >Primo Saiani </option>
+                            <option value="02" >Unidade Central</option>
+                            <option value="03" >Unidade Itararé</option>
+                            <option value="04" >Unidade Camilo de Matos</option>
+                            <option value="05" >Unidade Carlos Chagas -  Itatiaia</option>
+                            <option value="05" >Unidade Independência.</option>
+                            <option value="05" >Hospital Veterinário</option>
+                            <option value="05" >Clínica de Psicologia </option>
+                            <option value="05" >Clínica de Fisioterapia</option>
+                            <option value="05" >Unidade Santa Casa</option>
+                            <option value="05" >Biblioteca Central</option>
+                            <option value="05" >Clínica de Psicopedagogia</option>
+                            <option value="05" >Unidade Santa Casa</option>
+                            <option value="05" >Unidade Golfe</option>
+                          </select>
+                        </div>
+                      </div>
+                      <br/>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <label>* Descrever o itinerário completo contendo todos os endereços dos locais visitados </label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <textarea rows="4"  class="form-control" placeholder="Descrever itinerário aqui"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <h6>20. Orçamento</h6>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 form-radio radio radio-info radio-inline">
+                          <label>
+                            <input  type="radio" name="PossuiOrcamento" value="Sim" (change)="PossuiOrcamento('Não')"><i class="helper"></i>Proposta sem custos
+                          </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 form-radio radio radio-info radio-inline">
+                        <label>
+                          <input type="radio" name="PossuiOrcamento" value="Não"  (change)="PossuiOrcamento('Sim')">
+                          <i class="helper"></i>Proposta com custos
+                        </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12" *ngIf="Planilhadecustos">
+                        <app-card [blockClass]="'caption-breadcrumb'">
+                          <div class="breadcrumb-header central">
+                            <br/>
+                            <div class="row">
+                              <h5>Tabela de Custos</h5>
+                            </div>
+                          </div>
+                        </app-card>
+
+                        <h5>Receita</h5>
+                        <div class="table-responsive">
+                          <table class="table table-striped table-bordered">
+                            <thead>
+                              <tr bgcolor="#CD853F">
+                                <th class="col-sm-2">Receita</th>
+                                <th class="col-sm-1">Quantidade</th>
+                                <th class="col-sm-1">Vr. Unit.</th>
+                                <th class="col-sm-1">Valor Total</th>
+                                <th class="col-sm-4">Observação</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Taxa inscrição alunos curso</td>
+                                <td>20</td>
+                                <td>10,00</td>
+                                <td>200,00</td>
+                                <td></td>
+                                <td><input type="checkbox"></td>
+                              </tr>
+                              <tr>
+                                <td>Taxa inscrição externo
+                                </td>
+                                <td>10</td>
+                                <td>15,00</td>
+                                <td>150,00</td>
+                                <td></td>
+                                <td><input type="checkbox"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="row">
+                          <label class="col-sm-12"><b>Total das receitas: 350,00</b> </label>
+                          <div class="col-sm-11"></div>
+                          <div class="form-group "><button class="btn btn-success btn-icon" (click)="openMyModal('DespesaCustos')">+</button></div>
+                          <div class="form-group "><button class="btn btn-danger btn-icon">-</button></div>
+                        </div>
+
+                        <app-modal-animation [modalID]="'DespesaCustos'" [modalClass]="'md-DespesaCustos'" >
+                            <h3>Novo - Custos</h3>
+                            <div>
+                              <form>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Item:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <select id="Opcoesoutrosrecursos" name="Opcoesoutrosrecursos" class="form-control form-control-inverse col-sm-12">
+                                      <option value="01" ></option>
+                                      <option value="06" >Taxa inscrição alunos curso</option>
+                                      <option value="02" >Taxa inscrição aluno outros</option>
+                                      <option value="03" >Taxa inscrição externo</option>
+                                      <option value="03" >Diretório acadêmico</option>
+                                      <option value="03" >Patrocínio</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Quantidade:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Valor unitário:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-12">
+                                    <label class="col-form-label ">Valor total: R$ 1.234,56 (valor de exemplo) </label>
+                                  </div>
+                                </div>
+                              </form>
+                              <div class="form-group row">
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                                </div>
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                                </div>
+                              </div>
+                            </div>
+                            <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+                        </app-modal-animation>
+
+
+                        <hr style="height:2px; border:none; color:#000; background-color:#000; margin-top: 0px; margin-bottom: 0px;"/>
+
+                        <br/>
+                        <h5>Despesas - Recursos humanos</h5>
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr bgcolor="#9932CC">
+                                  <th class="col-sm-2">Interno - tabela Mauá</th>
+                                  <th class="col-sm-2">Titulação</th>
+                                  <th class="col-sm-2">Descrição</th>
+                                  <th class="col-sm-1">Quantidade</th>
+                                  <th class="col-sm-1">Vr. Unit.</th>
+                                  <th class="col-sm-1">Valor Total</th>
+                                  <th class="col-sm-4">Observação</th>
+                                  <th> </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Emilly Britto</td>
+                                  <td>Mestre</td>
+                                  <td>Hora aula assistente I</td>
+                                  <td>1</td>
+                                  <td>55,00</td>
+                                  <td>55,00</td>
+                                  <td></td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-11"></div>
+                            <div class="form-group"><button class="btn btn-success btn-icon" (click)="openMyModal('DespesaPessoalInterno')">+</button></div>
+                            <div class="form-group"><button class="btn btn-danger btn-icon">-</button></div>
+                          </div>
+
+                          <app-modal-animation [modalID]="'DespesaPessoalInterno'" [modalClass]="'md-DespesaPessoalInterno'" >
+                              <h3>Novo - Pessoal interno</h3>
+                              <div>
+                                <form>
+
+                                    <div class="form-group row">
+                                      <div class="col-sm-2">
+                                        <label class="col-form-label ">Nome:</label>
+                                      </div>
+                                      <div class="col-sm-10">
+                                        <input type="text" class="form-control"/>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                          <label class="col-form-label ">Titulação / a definir:</label>
+                                        </div>
+                                        <div class="col-sm-10">
+                                          <input type="text" class="form-control"/>
+                                        </div>
+                                      </div>
+
+                                  <div class="form-group row">
+                                    <div class="col-sm-2">
+                                      <label class="col-form-label ">Item:</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                      <select id="Opcoesoutrosrecursos" name="Opcoesoutrosrecursos" class="form-control form-control-inverse col-sm-12">
+                                        <option value="01" ></option>
+                                        <option value="06" >Hora aula assistente I</option>
+                                        <option value="02" >Hora aula assistente II</option>
+                                        <option value="03" >Hora aula assistente III</option>
+                                        <option value="03" >Hora aula assistente IV</option>
+                                        <option value="03" >Hora aula adjunto I</option>
+                                        <option value="03" >Hora aula adjunto II</option>
+                                        <option value="03" >Hora aula adjunto IV</option>
+                                        <option value="03" >Hora aula adjunto V</option>
+                                        <option value="03" >Hora aula titular I</option>
+                                        <option value="03" >Hora aula titular II</option>
+                                        <option value="03" >Hora aula titular III</option>
+                                        <option value="03" >Hora aula titular IV</option>
+                                        <option value="03" >Hora aula titular V</option>
+                                        <option value="03" >Hora atividade assistente I</option>
+                                        <option value="03" >Hora atividade assistente II</option>
+                                        <option value="03" >Hora atividade assistente III</option>
+                                        <option value="03" >Hora atividade adjunto I</option>
+                                        <option value="03" >Hora atividade adjunto II</option>
+                                        <option value="03" >Hora atividade adjunto III</option>
+                                        <option value="03" >Hora atividade adjunto IV</option>
+                                        <option value="03" >Hora atividade adjunto V</option>
+                                        <option value="03" >Hora atividade titular I</option>
+                                        <option value="03" >Hora atividade titular II</option>
+                                        <option value="03" >Hora atividade titular III</option>
+                                        <option value="03" >Hora atividade titular IV</option>
+                                        <option value="03" >Hora atividade titular V</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <div class="col-sm-3">
+                                      <label class="col-form-label ">Quantidade:</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <input type="text" class="form-control"/>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <label class="col-form-label ">Valor unitário:</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <input type="text" class="form-control"/>
+                                    </div>
+                                  </div>
+                                  <div class="form-group row">
+                                    <div class="col-sm-12">
+                                      <label class="col-form-label ">Valor total: R$ 1.234,56 (valor de exemplo) </label>
+                                    </div>
+                                  </div>
+                                </form>
+                                <div class="form-group row">
+                                  <div class="col-sm-6">
+                                    <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+                            </app-modal-animation>
+
+
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr bgcolor="#BA55D3">
+                                  <th class="col-sm-2">Interno - valor fixo/especial</th>
+                                  <th class="col-sm-2">Titulação</th>
+                                  <th class="col-sm-2">Descrição</th>
+                                  <th class="col-sm-1">Quantidade</th>
+                                  <th class="col-sm-1">Vr. Unit.</th>
+                                  <th class="col-sm-1">Valor Total</th>
+                                  <th class="col-sm-4">Observação</th>
+                                  <th> </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Karina Mara Martins Viana</td>
+                                  <td>Mestre</td>
+                                  <td>Hora aula assistente I</td>
+                                  <td>1</td>
+                                  <td>46,89</td>
+                                  <td>46,89</td>
+                                  <td></td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td>Ricardo Luiz Morelli</td>
+                                  <td>Mestre</td>
+                                  <td>Hora aula titular V</td>
+                                  <td>2</td>
+                                  <td>56,66</td>
+                                  <td>113,32</td>
+                                  <td></td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-11"></div>
+                            <div class="col-sm-11"></div>
+                              <div class="form-group"><button class="btn btn-success btn-icon" (click)="openMyModal('PessoalInternoespecial')">+</button></div>
+                            <div class="form-group"><button class="btn btn-danger btn-icon">-</button></div>
+                          </div>
+
+                          <app-modal-animation [modalID]="'PessoalInternoespecial'" [modalClass]="'md-PessoalInternoespecial'" >
+                            <h3>Novo - Interno com valor fixo/especial</h3>
+                            <div>
+                              <form>
+                                <div class="form-group row">
+                                  <div class="col-sm-2">
+                                    <label class="col-form-label ">Nome:</label>
+                                  </div>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-2">
+                                    <label class="col-form-label ">Titulação / a definir:</label>
+                                  </div>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <div class="col-sm-2">
+                                    <label class="col-form-label ">Item:</label>
+                                  </div>
+                                  <div class="col-sm-10">
+                                    <select id="Opcoesoutrosrecursos" name="Opcoesoutrosrecursos" class="form-control form-control-inverse col-sm-12">
+                                      <option value="01" ></option>
+                                      <option value="06" >Hora aula assistente I</option>
+                                      <option value="02" >Hora aula assistente II</option>
+                                      <option value="03" >Hora aula assistente III</option>
+                                      <option value="03" >Hora aula assistente IV</option>
+                                      <option value="03" >Hora aula adjunto I</option>
+                                      <option value="03" >Hora aula adjunto II</option>
+                                      <option value="03" >Hora aula adjunto IV</option>
+                                      <option value="03" >Hora aula adjunto V</option>
+                                      <option value="03" >Hora aula titular I</option>
+                                      <option value="03" >Hora aula titular II</option>
+                                      <option value="03" >Hora aula titular III</option>
+                                      <option value="03" >Hora aula titular IV</option>
+                                      <option value="03" >Hora aula titular V</option>
+                                      <option value="03" >Hora atividade assistente I</option>
+                                      <option value="03" >Hora atividade assistente II</option>
+                                      <option value="03" >Hora atividade assistente III</option>
+                                      <option value="03" >Hora atividade adjunto I</option>
+                                      <option value="03" >Hora atividade adjunto II</option>
+                                      <option value="03" >Hora atividade adjunto III</option>
+                                      <option value="03" >Hora atividade adjunto IV</option>
+                                      <option value="03" >Hora atividade adjunto V</option>
+                                      <option value="03" >Hora atividade titular I</option>
+                                      <option value="03" >Hora atividade titular II</option>
+                                      <option value="03" >Hora atividade titular III</option>
+                                      <option value="03" >Hora atividade titular IV</option>
+                                      <option value="03" >Hora atividade titular V</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Quantidade:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Valor unitário:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-12">
+                                    <label class="col-form-label ">Valor total: R$ 1.234,56 (valor de exemplo) </label>
+                                  </div>
+                                </div>
+                              </form>
+                              <div class="form-group row">
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                                </div>
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                                </div>
+                              </div>
+                            </div>
+                            <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+                          </app-modal-animation>
+
+                          <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                  <thead>
+                                    <tr bgcolor="#EE82EE">
+                                      <th class="col-sm-2">Externo</th>
+                                      <th class="col-sm-2">Dados pessoais</th>
+                                      <th class="col-sm-1">Dados bancários</th>
+                                      <th class="col-sm-1">Quant. horas</th>
+                                      <th class="col-sm-1">Vr. Unit.</th>
+                                      <th class="col-sm-1">Valor Total</th>
+                                      <th class="col-sm-4">Observação</th>
+                                      <th> </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>João da Silva</td>
+                                      <td>RG: 40.455.115-x CPF:</td>
+                                      <td>Banco: 003 Ag:3550 C/c: 55669455-5</td>
+                                      <td>1</td>
+                                      <td>46,89</td>
+                                      <td>46,89</td>
+                                      <td></td>
+                                      <td><input type="checkbox"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="row">
+
+                                <label class="col-sm-5"><b>Total de Encargos: 337,62</b> </label>
+                                <label class="col-sm-6"><b>Total de pessoal: 337,62</b> </label>
+
+                                <div class="form-group"><button class="btn btn-success btn-icon" (click)="openMyModal('PessoalExterno')">+</button></div>
+                                <div class="form-group"><button class="btn btn-danger btn-icon">-</button></div>
+                              </div>
+
+                              <app-modal-animation [modalID]="'PessoalExterno'" [modalClass]="'md-PessoalExterno'" >
+                                <h3>Novo - Externo</h3>
+                                <div>
+                                  <form>
+                                    <div class="form-group row">
+                                      <div class="col-sm-2">
+                                        <label class="col-form-label ">Nome:</label>
+                                      </div>
+                                      <div class="col-sm-10">
+                                        <input type="text" class="form-control"/>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <div class="col-sm-2">
+                                        <label class="col-form-label ">Dados pessoais:</label>
+                                      </div>
+                                      <div class="col-sm-10">
+                                        <input type="text" class="form-control"/>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                          <label class="col-form-label ">Dados bancários:</label>
+                                        </div>
+                                        <div class="col-sm-10">
+                                          <input type="text" class="form-control"/>
+                                        </div>
+                                      </div>
+
+                                    <div class="form-group row">
+                                      <div class="col-sm-3">
+                                        <label class="col-form-label ">Quant. horas:</label>
+                                      </div>
+                                      <div class="col-sm-3">
+                                        <input type="text" class="form-control"/>
+                                      </div>
+                                      <div class="col-sm-3">
+                                        <label class="col-form-label ">Valor unitário:</label>
+                                      </div>
+                                      <div class="col-sm-3">
+                                        <input type="text" class="form-control"/>
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <div class="col-sm-12">
+                                        <label class="col-form-label ">Valor total: R$ 1.234,56 (valor de exemplo) </label>
+                                      </div>
+                                    </div>
+                                  </form>
+                                  <div class="form-group row">
+                                    <div class="col-sm-6">
+                                      <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                      <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+                              </app-modal-animation>
+
+
+                          <hr style="height:2px; border:none; color:#000; background-color:#000; margin-top: 0px; margin-bottom: 0px;"/>
+
+                          <br/>
+                          <h5>Despesas viagem</h5>
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr bgcolor="#836FFF">
+                                  <th >Descrição</th>
+                                  <th >Responsável</th>
+                                  <th >Cidade saída</th>
+                                  <th >Cidade chegada</th>
+                                  <th >Data</th>
+                                  <th >H.saída</th>
+                                  <th >H.chegada</th>
+                                  <th >Quantidade</th>
+                                  <th >Vr. Unit.</th>
+                                  <th >Vr. Total</th>
+                                  <th >Observação</th>
+                                  <td></td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Passagens</td>
+                                  <td>Barão de Mauá</td>
+                                  <td>Ribeirão Preto</td>
+                                  <td>São Paulo</td>
+                                  <td>27/06/2018</td>
+                                  <td>02:00</td>
+                                  <td>06:00</td>
+                                  <td>2</td>
+                                  <td>R$ 97,00</td>
+                                  <td>R$ 194,00</td>
+                                  <td></td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td>Passagens</td>
+                                  <td>Barão de Mauá</td>
+                                  <td>São Paulo</td>
+                                  <td>Ribeirão Preto</td>
+                                  <td>27/06/2018</td>
+                                  <td>19:45</td>
+                                  <td>00:05</td>
+                                  <td>2</td>
+                                  <td>R$ 91,81</td>
+                                  <td>R$ 183,62</td>
+                                  <td></td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-12"><b>Total de locomoção: 337,62</b> </label>
+                            <div class="col-sm-11"></div>
+                            <div class="form-group "><button class="btn btn-success btn-icon" (click)="openMyModal('DespesaViagem')">+</button></div>
+                            <div class="form-group "><button class="btn btn-danger btn-icon">-</button></div>
+                          </div>
+
+                          <app-modal-animation [modalID]="'DespesaViagem'" [modalClass]="'md-DespesaViagem'" >
+                            <h3>Novo - Despesas com viagem</h3>
+                            <div>
+                              <form>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Descrição:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <select id="OpcoesViagens" name="OpcoesViagens" class="form-control form-control-inverse col-sm-12">
+                                      <option value="01" ></option>
+                                      <option value="06" >Locação de ônibus/van</option>
+                                      <option value="02" >Passagens</option>
+                                      <option value="03" >Estadias</option>
+                                      <option value="04" >Alimentação</option>
+                                      <option value="05" >Inscrições/taxas</option>
+                                      <option value="05" >Taxi</option>
+                                      <option value="05" >Combustível</option>
+                                      <option value="05" >Pedágio </option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Responsável pela compra:</label>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <div class="radio col-sm-12">
+                                      <input class="radio" type="radio" id="Domingo" name="parametromensal" value="dia" (change)="EventomensalDia('dia')"> Proponente
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-5">
+                                    <div class="radio col-sm-12">
+                                      <input class="radio" type="radio" id="Domingo" name="parametromensal" value="semana" (change)="EventomensalSemana('semana')"> Barão de Mauá
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Cidade saída:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Cidade chegada:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Data:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="date" class="date" >
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Hora saída:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control hour" placeholder="__:__" mask="00:00">
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Hora chegada:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control hour" placeholder="__:__" mask="00:00">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Quantidade:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Valor unitário:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Observação:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <textarea rows="2"  class="form-control"></textarea>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-12">
+                                    <label class="col-form-label ">Valor total: R$ 1.234,56 (valor de exemplo) </label>
+                                  </div>
+                                </div>
+                              </form>
+                              <div class="form-group row">
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                                </div>
+                              </div>
+                            </div>
+                            <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+                          </app-modal-animation>
+
+                          <hr style="height:2px; border:none; color:#000; background-color:#000; margin-top: 0px; margin-bottom: 0px;"/>
+
+                          <br/>
+                          <h5>Marketing</h5>
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr bgcolor="#ADFF2F">
+                                  <th >Itens</th>
+                                  <th >Detalhes</th>
+                                  <th >Quantidade</th>
+                                  <th >Vr. Unit.</th>
+                                  <th >Vr. Total</th>
+                                  <th ></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Canetas</td>
+                                  <td>Caixa de caneta azul com CX 50 UN</td>
+                                  <td>1</td>
+                                  <td>34,90</td>
+                                  <td>34,90</td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td>Camisetas</td>
+                                  <td>Tamanho GG</td>
+                                  <td>4</td>
+                                  <td>25,00</td>
+                                  <td>100,00</td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-12"><b>Total de Marketing: R$ 134,90</b> </label>
+                            <div class="col-sm-11"></div>
+                            <div class="form-group"><button class="btn btn-success btn-icon" (click)="openMyModal('DespesaMarketing')">+</button></div>
+                            <div class="form-group "><button class="btn btn-danger btn-icon">-</button></div>
+                          </div>
+
+                          <app-modal-animation [modalID]="'DespesaMarketing'" [modalClass]="'DespesaMarketing'" >
+                            <h3>Novo - Despesas com o Marketing</h3>
+                            <div>
+                              <form>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Item:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <select id="OpcoesViagens" name="OpcoesViagens" class="form-control form-control-inverse col-sm-12">
+                                      <option value="01" ></option>
+                                      <option value="06" >Banners</option>
+                                      <option value="02" >Blocos</option>
+                                      <option value="03" >Camisetas</option>
+                                      <option value="04" >Canetas</option>
+                                      <option value="05" >Cartazes</option>
+                                      <option value="05" >Crachás</option>
+                                      <option value="05" >E-cards</option>
+                                      <option value="05" >Faixas </option>
+                                      <option value="05" >Brindes/Presentes </option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Detalhar item:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <textarea rows="2"  class="form-control"></textarea>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Quantidade:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Valor unitário:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-12">
+                                    <label class="col-form-label ">Valor total: R$ 1.234,56 (valor de exemplo) </label>
+                                  </div>
+                                </div>
+                              </form>
+                              <div class="form-group row">
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                                </div>
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                                </div>
+                              </div>
+                            </div>
+                            <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+                          </app-modal-animation>
+
+                          <hr style="height:2px; border:none; color:#000; background-color:#000; margin-top: 0px; margin-bottom: 0px;"/>
+
+                          <br/>
+                          <h5>Outros recursos</h5>
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr bgcolor="#00FFFF">
+                                  <th >Itens</th>
+                                  <th >Detalhes</th>
+                                  <th >Quantidade</th>
+                                  <th >Vr. Unit.</th>
+                                  <th >Vr. Total</th>
+                                  <th ></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Água mineral</td>
+                                  <td>Garrafa com 500ML</td>
+                                  <td>6</td>
+                                  <td>1,15</td>
+                                  <td>6,90</td>
+                                  <td><input type="checkbox"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <label class="col-sm-12"><b>Total de outros recursos: R$ 6,90</b> </label>
+                            <div class="col-sm-11"></div>
+                            <div class="form-group"><button class="btn btn-success btn-icon" (click)="openMyModal('Despesaoutrosrecursos')">+</button></div>
+                            <div class="form-group "><button class="btn btn-danger btn-icon">-</button></div>
+                          </div>
+
+                          <app-modal-animation [modalID]="'Despesaoutrosrecursos'" [modalClass]="'Despesaoutrosrecursos'" >
+                            <h3>Novo - Outros recursos</h3>
+                            <div>
+                              <form>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Item:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <select id="Opcoesoutrosrecursos" name="Opcoesoutrosrecursos" class="form-control form-control-inverse col-sm-12">
+                                      <option value="01" ></option>
+                                      <option value="06" >Coffee break</option>
+                                      <option value="02" >Água mineral</option>
+                                      <option value="03" >Outros</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Detalhar item:</label>
+                                  </div>
+                                  <div class="col-sm-9">
+                                    <textarea rows="2"  class="form-control"></textarea>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Quantidade:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <label class="col-form-label ">Valor unitário:</label>
+                                  </div>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control"/>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <div class="col-sm-12">
+                                    <label class="col-form-label ">Valor total: R$ 1.234,56 (valor de exemplo) </label>
+                                  </div>
+                                </div>
+                              </form>
+                              <div class="form-group row">
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalHorario.hide()">ADICIONAR</button>
+                                </div>
+                                <div class="col-sm-6">
+                                  <button type="button" class="btn btn-danger waves-effect" (click)="modalHorario.hide()">CANCELAR</button>
+                                </div>
+                              </div>
+                            </div>
+                            <button (click)="closeMyModal($event)" aria-label="Close" class="md-close-btn"><i class="icofont icofont-ui-close"></i></button>
+                          </app-modal-animation>
+
+                          <hr style="height:2px; border:none; color:#000; background-color:#000; margin-top: 0px; margin-bottom: 0px;"/>
+
+                          <div class="row">
+                            <div class="col-sm-6"><h4>Total despensas: 200,00</h4></div>
+                            <div class="col-sm-6"><h4>Resultado final: 400,00</h4></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr/>
+                      <div class="col-sm-12 row">
+                        <div class="col-sm-6">
+                          <button class="btn btn-primary btn-block"> << ANTERIOR << </button>
+                        </div>
+                        <div class="col-sm-6"></div>
+                      </div>
+                      <br/>
+                    </div>
+                  </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="form-group col-sm-4">
+    <button class="btn btn-success btn-block">SALVAR</button>
+  </div>
+  <div class="form-group col-sm-4">
+    <button class="btn btn-danger btn-block " (click)="modalExcluir.show()">EXCLUIR</button>
+  </div>
+  <div class="form-group col-sm-4">
+    <button class="btn btn-info btn-block ">ENVIAR PARA ANÁLISE</button>
+  </div>
+</div>
+
+<br/>
+
+<app-modal-basic #modalExcluir>
+  <div class="app-modal-header">
+    <h4 class="modal-title"  >Cancelamento da proposta de extensão</h4>
+    <button type="button" style="color: #EE3B3B"  class="close basic-close" (click)="modalExcluir.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <div class=" form-group col-sm-12 row">
+      <h5>Motivo:</h5>
+    </div>
+    <div class=" form-group col-sm-12 row">
+      <textarea rows="3" class="col-sm-12"></textarea>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-success waves-effect waves-light" (click)="modalExcluir.hide()">ADICIONAR</button>
+    <button type="button" class="btn btn-danger waves-effect" (click)="modalExcluir.hide()">CANCELAR</button>
+  </div>
+</app-modal-basic>

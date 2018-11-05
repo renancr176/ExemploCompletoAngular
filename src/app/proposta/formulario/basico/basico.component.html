@@ -1,0 +1,430 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h6>1. Esta proposta está vinculada a algum Programa ou Projeto já cadastrado no sistema?</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="vinculoOutraProposta" class="vinculoOutraProposta" value="0" (click)="radioVinculoOutraProposta($event)" [checked]="!propostaModel.vinculadoOutraPrograma">
+          Não
+        </label>
+      </div>
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="vinculoOutraProposta" class="vinculoOutraProposta" value="1" (click)="radioVinculoOutraProposta($event)" [checked]="propostaModel.vinculadoOutraPrograma">
+          Sim
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="propostaModel.vinculadoOutraPrograma">
+  <div class="col-sm-12">
+    <h6>1-1. Escolha o outro programa a qual este programa se vincula.</h6>
+  </div>
+</div>
+<div class="row" *ngIf="propostaModel.vinculadoOutraPrograma">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <select name="select" class="form-control" (change)="selectVinculadoOutroPrograma($event)">
+        <option value="">Selecione o programa</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>2. Tipo de atividade de extensão.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <select name="select" class="form-control" (change)="selectTipoAtividadeExtensao($event)">
+        <option value="">Selecione o tipo de atividade de extensão</option>
+        <option *ngFor="let item of tipoAtividade" value="{{item.idTipoAtividade}}" [selected]="propostaModel.idTipoAtividade != null && propostaModel.idTipoAtividade.equals(item.idTipoAtividade)">{{item.descricaoTipoAtividade}}</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="habilitaCientePrograma()">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <div class="bs-checkbox">
+        <label>
+          <input type="checkbox" id="cientePrograma" (click)="checkCientePrograma($event)" [checked]="propostaModel.cientePrograma">
+          Estou ciente que as atividades de extensão relacionadas a este programa, deverão ser cadastradas separadamente no sistema de extensão.
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="habilitaCienteProjeto()">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <div class="bs-checkbox">
+        <label>
+          <input type="checkbox" id="cienteProjeto" (click)="checkCienteProjeto($event)" [checked]="propostaModel.cienteProjeto">
+          Estou ciente que as atividades de extensão não descritas nesta proposta e que estejam relacionadas a este projeto, deverão ser cadastradas separadamente no sistema de extensão.
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>3. É uma ação de Responsabilidade Social?</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="responsabilidadeSocial" class="responsabilidadeSocial" value="0" (click)="radioResponsabilidadeSocial($event)" [checked]="!propostaModel.responsabilidadeSocial">
+          Não
+        </label>
+      </div>
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="responsabilidadeSocial" class="responsabilidadeSocial" value="1" (click)="radioResponsabilidadeSocial($event)" [checked]="propostaModel.responsabilidadeSocial">
+          Sim
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="propostaModel.responsabilidadeSocial">
+  <div class="col-sm-12">
+    <h6>3-1. Tipo de Responsabilidade Social</h6>
+  </div>
+</div>
+<div class="row" *ngIf="propostaModel.responsabilidadeSocial">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <select name="select" class="form-control" (change)="selectTipoResponsabilidadeSocial($event)">
+        <option value="">Selecione o tipo de responsabilidade social</option>
+        <option 
+          *ngFor="let item of tipoResponsabilidadeSocial" 
+          value="{{item.idTipoResponsabilidadeSocial}}" 
+          [selected]="setSelectedTipoResponsabilidadeSocial(item.idTipoResponsabilidadeSocial)">
+          {{item.descricaoTipoResponsabilidadeSocial}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>4. Área temática.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <ng-select *ngIf="optionsTipoAreaTematica!= null && optionsTipoAreaTematica.length > 0" 
+        [ngClass]="'ng-select'" 
+        [options]="optionsTipoAreaTematica" 
+        [multiple]="true" 
+        [allowClear]="true" 
+        [placeholder]="'Selecione ao menos uma das áreas temáticas clicando aqui.'"
+        [(ngModel)]="selectedTipoAreaTematica" 
+        (ngModelChange)="selectTipoAreaTematica($event)"
+      >
+      </ng-select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>5. Área de conhecimento principal da atividade de extensão.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <select name="select" class="form-control" (change)="selectTipoAreaConhecimento($event)">
+        <option value="">Selecione a área de conhecimento</option>
+        <option *ngFor="let item of tipoAreaConhecimento" value="{{item.idTipoAreaConhecimento}}" [selected]="propostaModel.idTipoAreaConhecimento != null && propostaModel.idTipoAreaConhecimento.equals(item.idTipoAreaConhecimento)">{{item.descricaoTipoAreaConhecimento}}</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row" *ngFor="let index of indexSubAreaConhecimento">
+  <div class="col-sm-12">
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Sub-área {{index}}:</label>
+      <div class="col-sm-10">
+        <select name="select" class="form-control" (change)="selectTipoAreaConhecimentoSubAreas(index, $event)">
+          <option value="">Selecione a sub-área do conhecimento</option>
+          <option *ngFor="let item of tipoAreaConhecimentoSubAreas" 
+          value="{{item.idTipoAreaConhecimentoSubArea}}" 
+          [selected]="setSelectedTipoAreaConhecimentoSubArea(item.idTipoAreaConhecimentoSubArea, index)"
+          >
+          {{item.descricaoTipoAreaConhecimentoSubArea}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>6. Título.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <input type="text" [value]="propostaModel.titulo != null? propostaModel.titulo:''" class="form-control" placeholder="Informe o título da proposta" (change)="inputTitulo($event)">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>7. Curso(s).</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <select name="select" class="form-control" (change)="selectTipoCurso($event)">
+        <option value="">Selecione o tipo do curso</option>
+        <option 
+          *ngFor="let item of tipoCurso" 
+          value="{{item.idTipoCurso}}" 
+          [selected]="setSelectedTipoCurso(item.idTipoCurso)">
+        {{item.descricaoTipoCurso}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="optionsCurso != null && optionsCurso.length > 0">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <ng-select *ngIf="optionsCurso != null && optionsCurso.length > 0" 
+        [ngClass]="'ng-select'" 
+        [options]="optionsCurso" 
+        [multiple]="true" 
+        [allowClear]="true" 
+        [placeholder]="'Selecione ao menos um curso.'"
+        [(ngModel)]="selectedCurso" 
+        (ngModelChange)="selectCurso($event)"
+      >
+      </ng-select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>8. Total de vagas.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Quantidade:</label>
+      <div class="col-sm-2">
+        <input type="text" [value]="propostaModel.quantidadeVagas != null? propostaModel.quantidadeVagas: ''" class="form-control" placeholder="Informe a quandidade de vagas" (change)="inputQtdVagas($event)" [disabled]="propostaModel.naoSeAplicaVagas">
+      </div>
+      <div class="col-sm-2">
+        <div class="bs-checkbox">
+          <label class="bs-checkbox-inline">
+            <input type="checkbox" (click)="checkboxNaoSeAplicaVagas($event)" [checked]="propostaModel.naoSeAplicaVagas"> Não se aplica
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>9. Público alvo.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <ng-select *ngIf="optionsPublicoAlvo != null && optionsPublicoAlvo.length > 0" 
+        [ngClass]="'ng-select'" 
+        [options]="optionsPublicoAlvo" 
+        [multiple]="true" 
+        [allowClear]="true" 
+        [placeholder]="'Selecione ao menos um público alvo.'"
+        [(ngModel)]="selectedTipoPublicoAlvo" 
+        (ngModelChange)="selectTipoPublicoAlvo($event)"
+      >
+      </ng-select>
+    </div>
+  </div>
+</div>
+<div class="row" *ngFor="let item of tipoPubliAlvoRequerEspecificacao">
+  <div class="col-sm-12">
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Especificar público {{item.descricaoTipoPublicoAlvo}}:</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" (change)="textareaEspecificacao(item.idTipoPublicoAlvo, $event)">{{getTipoPubliAlvoEspecificacao(item.idTipoPublicoAlvo)}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>10. Inscrições.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <select name="select" class="form-control" (change)="selectTipoInscricao($event)" [disabled]="propostaModel.naoSeAplicaInscricao">
+          <option value="" [selected]="propostaModel.idTipoInscricao == null">Selecione o tipo de inscricao</option>
+          <option *ngFor="let item of tipoInscricao" value="{{item.idTipoInscricao}}" [selected]="propostaModel.idTipoInscricao != null && propostaModel.idTipoInscricao.equals(item.idTipoInscricao)">{{item.descricao}}</option>
+        </select>
+      </div>
+      <div class="col-sm-6">
+        <div class="bs-checkbox">
+          <label>
+            <input type="checkbox" (click)="checkboxTipoInscricao($event)" [checked]="propostaModel.naoSeAplicaInscricao">
+            Não se aplica
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>11. Justificativa da proposta.</h6>
+    <label>Descrever a relevância / importância da realização da proposta</label>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <textarea class="form-control" (change)="textareaJustificativaProposta($event)" placeholder="Justificar">{{propostaModel.justificativaProposta != null? propostaModel.justificativaProposta:''}}</textarea>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>12. Objetivos.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <textarea class="form-control" (change)="textareaObjetivos($event)" placeholder="Especificar">{{propostaModel.objetivos}}</textarea>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>13. Descrição das atividades a serem desenvolvidas.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <textarea class="form-control" (change)="textareaDescricaoAtivadades($event)" placeholder="Descrever">{{propostaModel.descricaoAtivadades}}</textarea>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>14. Impactos e resultados esperados.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <textarea class="form-control" (change)="textareaImpactosResultadosEsperados($event)" placeholder="Descrever">{{propostaModel.impactosResultadosEsperados}}</textarea>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>15. Forma de avalicao da ação de extrnsão.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <textarea class="form-control" (change)="textareaFormaAvalAcaoExtensao($event)" placeholder="Descrever">{{propostaModel.formaAvalAcaoExtensao}}</textarea>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h6>16. Vínculo com ensino?</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="vinculoComEnsino" class="vinculoComEnsino" value="0" (click)="radioVinculoComEnsino($event)" [checked]="!propostaModel.vinculoComEnsino">
+          Não
+        </label>
+      </div>
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="vinculoComEnsino" class="vinculoComEnsino" value="1" (click)="radioVinculoComEnsino($event)" [checked]="propostaModel.vinculoComEnsino">
+          Sim
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <h6>17. Vínculo com pesquisa?</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="vinculoComPesquisa" class="vinculoComPesquisa" value="0" (click)="radioVinculoComPesquisa($event)" [checked]="!propostaModel.vinculoComPesquisa">
+          Não
+        </label>
+      </div>
+      <div class="bs-radio">
+        <label>
+          <input type="radio" name="vinculoComPesquisa" class="vinculoComPesquisa" value="1" (click)="radioVinculoComPesquisa($event)" [checked]="propostaModel.vinculoComPesquisa">
+          Sim
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="bs-btn-group bs-btn-group-justified" role="group">
+      <div class="bs-btn-group" role="group"></div>
+      <div class="bs-btn-group" role="group">
+        <button class="btn btn-primary btn-outline-primary" (click)="nextTab()"><strong>Próximo <i class="fa fa-arrow-right" aria-hidden="true"></i></strong></button>
+      </div>
+    </div>
+  </div>
+</div>

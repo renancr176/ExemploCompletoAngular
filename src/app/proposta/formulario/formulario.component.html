@@ -1,0 +1,122 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="profile-bg-img">
+      <img class="profile-bg-img img-fluid" src="assets/images/user-profile/proposta.jpeg" alt="bg-img">
+    </div>
+  </div>
+</div>
+<br/>
+<div class="card">
+  <div class="card-header">
+    <h5>Formulário para proposta de extensão</h5>
+    <label>O prazo para a protocolização da proposta deverá ser de, no mínimo, {{((configuracaoGera != null)? configuracaoGera.diasPrazoEntragaProposta:'')}} dias de antecedência do início da prática.</label>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group row">
+          <label class="col-sm-7 col-form-label">Data da entrega da proposta:</label>
+          <div class="col-sm-5">
+            <input type="text" specialCharacters="false" class="form-control date" [value]="calcDataEntregaProposta() | date: 'dd/MM/yyyy'" readonly >
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group row">
+          <label class="col-sm-6 col-form-label">Proposta:</label>
+          <div class="col-sm-6">
+            <input type="text" specialCharacters="false" class="form-control" placeholder="{{propostaModel.numeroProposta}}" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group row">
+          <label class="col-sm-6 col-form-label">Versão:</label>
+          <div class="col-sm-6">
+            <input type="text" specialCharacters="false" class="form-control" placeholder="{{propostaModel.versao}}" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Status:</label>
+          <div class="col-sm-10">
+            <b><label class="col-form-label text-danger">{{propostaModel.descricaoStatus}}</label></b>
+          </div>
+        </div>
+      </div>
+    </div>    
+    <hr/>
+    <div class="md-tabs">
+      <ngb-tabset [activeId]="selectedTab">
+        <ngb-tab [id]="'basico'">
+          <ng-template ngbTabTitle><i class="icofont icofont-home"></i> Básico</ng-template>
+          <ng-template ngbTabContent>
+            <div [@fadeInOutTranslate] class="m-t-15">
+              <app-basico 
+                [configuracaoGera]="configuracaoGera" 
+                [propostaModel]="propostaModel" 
+                (propostaModelFeedBack)="propostaModelFeedBack($event)"
+                (selectTab)="selectTab($event)"
+              >
+              </app-basico>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab [id]="'envolvidos'">
+          <ng-template ngbTabTitle><i class="icofont icofont-ui-user "></i> Envolvidos</ng-template>
+          <ng-template ngbTabContent>
+            <div [@fadeInOutTranslate] class="m-t-15">
+              <app-envolvidos 
+                [configuracaoGera]="configuracaoGera" 
+                [propostaModel]="propostaModel" 
+                (propostaModelFeedBack)="propostaModelFeedBack($event)"
+                (selectTab)="selectTab($event)"
+              >
+              </app-envolvidos>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab [id]="'peridoCronograma'">
+          <ng-template ngbTabTitle><i class="fa fa-calendar"></i> Período / Cronograma</ng-template>
+          <ng-template ngbTabContent>
+            <div [@fadeInOutTranslate] class="m-t-15">
+              <app-periodo-cronograma 
+                [configuracaoGera]="configuracaoGera"
+                [propostaModel]="propostaModel" 
+                (propostaModelFeedBack)="propostaModelFeedBack($event)"
+                (selectTab)="selectTab($event)"
+              >
+              </app-periodo-cronograma>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab [id]="'trajetoCustos'">
+          <ng-template ngbTabTitle><i class="fa fa-usd"></i> Trajeto / Custos</ng-template>
+          <ng-template ngbTabContent>
+            <div [@fadeInOutTranslate] class="m-t-15">
+              <app-trajeto-custos 
+                [configuracaoGera]="configuracaoGera"
+                [propostaModel]="propostaModel" 
+                (propostaModelFeedBack)="propostaModelFeedBack($event)"
+                (selectTab)="selectTab($event)"
+              >
+              </app-trajeto-custos>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</div>
+<div class="bs-btn-group bs-btn-group-justified" role="group">
+  <div class="bs-btn-group" role="group">
+    <button type="button" class="bs-btn bs-btn-lg btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> <strong>SALVAR</strong></button>
+  </div>
+  <div class="bs-btn-group" role="group">
+    <button type="button" class="bs-btn bs-btn-lg btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <strong>EXCLUIR</strong></button>
+  </div>
+  <div class="bs-btn-group" role="group">
+    <button type="button" class="bs-btn bs-btn-lg btn-info"><i class="fa fa-paper-plane" aria-hidden="true"></i> <strong>ENVIAR PARA ANÁLISE</strong></button>
+  </div>
+</div>

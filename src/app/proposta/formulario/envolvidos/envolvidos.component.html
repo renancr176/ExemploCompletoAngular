@@ -1,0 +1,165 @@
+<div *ngFor="let item of tiposEquipe; let i = index;">
+  <div class="row">
+    <div class="col-sm-12">
+      <hr *ngIf="i > 0"/>
+      <h6>{{i+1}}. {{item.descricaoTipoEquipe}}</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-striped" id="table-{{item.idTipoEquipe}}">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pessoa of getPessoasEquipe(item.idTipoEquipe); let i = index" id="{{pessoa.idPessoa.toString()}}">
+            <td>{{pessoa.nome}}</td>
+            <td>{{pessoa.cpf}}</td>
+            <td>{{pessoa.email}}</td>
+            <td>{{pessoa.telefone}}</td>
+            <td class="text-right">
+              <button 
+                type="button" 
+                class="btn btn-warning" 
+                *ngIf="pessoa.idTipoVinculo.toString().toLowerCase() == '9f4e647d-8cb9-4755-a4a3-a7909cc2cd7f'" 
+                (click)="btnModalAlter(pessoa)" 
+                title="Alterar">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+            </td>
+            <td class="text-right">
+              <button type="button" class="btn btn-danger" (click)="btnRemove(pessoa.idPessoa)" title="Remover">
+                <i class="fa fa-user-times" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <button type="button" class="btn btn-success" (click)="btnOpenModal(item.idTipoEquipe)" title="Adicionar"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="bs-btn-group bs-btn-group-justified" role="group">
+      <div class="bs-btn-group" role="group">
+        <button class="btn btn-primary btn-outline-primary" (click)="previewTab()"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i> Anterior</strong></button>
+      </div>
+      <div class="bs-btn-group" role="group">
+        <button class="btn btn-primary btn-outline-primary" (click)="nextTab()"><strong>Próximo <i class="fa fa-arrow-right" aria-hidden="true"></i></strong></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-animation #modalDefault [modalID]="'modalDefault'" [modalClass]="'md-effect-10'" [backDrop]="true">
+  <div class="app-modal-header app-modal-header-primary">
+    <h4 class="modal-title text-left">Adicionar a {{modalTitle}}</h4>
+    <button (click)="btnCloseModal()" aria-label="Close" class="md-close-btn">
+      <i class="icofont icofont-ui-close"></i>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <div class="radio" *ngFor="let item of tiposVinculo">
+      <label>
+        <input type="radio" name="tipoVinculo" value="{{item.idTipoVinculo}}" (click)="radioTipoVinculo(item.idTipoVinculo)" [checked]="checkedTipoVinculo(item.idTipoVinculo)">
+        {{item.descricaoTipoVinculo}}
+      </label>
+    </div>
+    <hr/>
+    <div *ngIf="pessoa != null && pessoa.idTipoVinculo != null && pessoa.idTipoVinculo.toString() == '48a0a79b-603d-46fe-9f4d-f4909fe60dbf'">
+      <div class="row">
+        <div class="col-sm-12">
+          <h6>SELECIONE O COLABORADOR</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <select name="select" class="form-control" (change)="selectPessoaColaborador($event)">
+              <option value="">Selecione o colaborador</option>
+              <option *ngFor="let item of rmPessoas" value="{{item.codigoPessoa}}">{{item.nome}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="pessoa != null && pessoa.idTipoVinculo != null && pessoa.idTipoVinculo.toString() == '9f4e647d-8cb9-4755-a4a3-a7909cc2cd7f'">
+        <div class="row">
+          <div class="col-sm-12">
+            <h6>Nome</h6>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <input type="text" [value]="pessoa != null && pessoa.nome != null ? pessoa.nome: ''" class="form-control" placeholder="Informe o nome completo" (keyup)="inputPessoaNome($event)"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+              <h6>Cpf</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <input type="tel" [value]="pessoa != null && pessoa.cpf != null ? pessoa.cpf: ''" class="form-control" placeholder="___.___.___-__" [textMask]="maskCPF" (keyup)="inputPessoaCpf($event)"/>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h6>E-mail</h6>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <input type="email" [value]="pessoa != null && pessoa.email != null ? pessoa.email: ''" class="form-control" (keyup)="inputPessoaEmail($event)"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h6>Telefone</h6>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <input type="tel" [value]="pessoa != null && pessoa.telefone != null ? pessoa.telefone: ''" class="form-control" placeholder="(  ) ____-_____" [textMask]="input1MaskPhone" (change)="inputPessoaTelefone($event)"/>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+          <div class="bs-btn-group" role="group">
+            <div class="bs-btn-group" role="group">
+                <button *ngIf="!modalBtnEdit" class="btn btn-success" (click)="btnAdd()"><strong>Adicionar</strong></button>
+                <button *ngIf="modalBtnEdit" class="btn btn-info" (click)="btnEdit()"><strong>Alterar</strong></button>
+            </div>
+            <div class="bs-btn-group" role="group">
+              <button class="btn btn-warning" (click)="btnCloseModal()"><strong>Cancelar</strong></button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</app-modal-animation>

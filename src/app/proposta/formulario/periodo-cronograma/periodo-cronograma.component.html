@@ -1,0 +1,167 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h6>1. Período de realização.</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Data Início:</label>
+      <div class="col-sm-3">
+        <input type="date" [value]="getDataInicio()" class="form-control" (change)="inputDataInicio($event)">
+      </div>
+      <label class="col-sm-3 col-form-label">Hora Início:</label>
+      <div class="col-sm-3">
+        <input type="text" [value]="getHoraInicio()" class="form-control" placeholder="__:__" [textMask]="maskHora" (change)="inputHoraInicio($event)">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Data Término:</label>
+      <div class="col-sm-3">
+        <input type="date" [value]="getDataTermino()" class="form-control" (change)="inputDataTermino($event)">
+      </div>
+      <label class="col-sm-3 col-form-label">Hora Término:</label>
+      <div class="col-sm-3">
+        <input type="text" [value]="getHoraTermino()" class="form-control" placeholder="__:__" [textMask]="maskHora" (change)="inputHoraTermino($event)">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="habilitaCronograma()">
+  <div class="col-sm-12">
+    <hr/>
+    <h6>2. Cronograma.</h6>
+  </div>
+</div>
+<div class="row" *ngIf="habilitaCronograma()">
+  <div class="col-sm-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Início</th>
+          <th>Termino</th>
+          <th>Responsável</th>
+          <th><!--Btn Detalhar--></th>
+          <th><!--Btn Alterar--></th>
+          <th><!--Btn Excluir--></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row" *ngIf="habilitaCronograma()">
+  <div class="col-sm-12 text-right">
+    <button type="button" class="btn btn-success" (click)="btnOpenModal()" title="Adicionar"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="bs-btn-group bs-btn-group-justified" role="group">
+      <div class="bs-btn-group" role="group">
+        <button class="btn btn-primary btn-outline-primary" (click)="previewTab()"><strong><i class="fa fa-arrow-left" aria-hidden="true"></i> Anterior</strong></button>
+      </div>
+      <div class="bs-btn-group" role="group">
+        <button class="btn btn-primary btn-outline-primary" (click)="nextTab()"><strong>Próximo <i class="fa fa-arrow-right" aria-hidden="true"></i></strong></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-animation #modalDefault [modalID]="'modalDefault'" [modalClass]="'md-effect-10'" [backDrop]="true">
+  <div class="app-modal-header app-modal-header-primary">
+    <h4 class="modal-title text-left">Adicionar a cronograma</h4>
+    <button (click)="btnCloseModal()" aria-label="Close" class="md-close-btn">
+      <i class="icofont icofont-ui-close"></i>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <h6>Data:</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <input type="date" class="form-control"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <hr/>
+        <h6>Hora:</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Início:</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" placeholder="__:__" [textMask]="maskHora">
+          </div>
+          <label class="col-sm-3 col-form-label">Término:</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" placeholder="__:__" [textMask]="maskHora">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <hr/>
+        <h6>Descrição:</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <textarea class="form-control"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <hr/>
+        <h6>Local:</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <textarea class="form-control"></textarea>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div class="radio" *ngFor="let item of tiposVinculo">
+      <label>
+        <input type="radio" name="tipoVinculo" (click)="radioTipoVinculo(item.idTipoVinculo)" [checked]="checkedTipoVinculo(item.idTipoVinculo)">
+        {{item.descricaoTipoVinculo}}
+      </label>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+          <div class="bs-btn-group" role="group">
+            <div class="bs-btn-group" role="group">
+                <button *ngIf="!modalBtnEdit" class="btn btn-success" (click)="btnAdd()"><strong>Adicionar</strong></button>
+                <button *ngIf="modalBtnEdit" class="btn btn-info" (click)="btnEdit()"><strong>Alterar</strong></button>
+            </div>
+            <div class="bs-btn-group" role="group">
+              <button class="btn btn-warning" (click)="btnCloseModal()"><strong>Cancelar</strong></button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</app-modal-animation>
